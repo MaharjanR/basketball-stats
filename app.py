@@ -37,7 +37,7 @@ def balance_player(experienced, not_experienced, teams):
     team2 = []
     team3 = []
     
-    for i in range(total_experienced_player):
+    for _ in range(total_experienced_player):
         random_number = randint(0,len(experienced) - 1)
         random_player = experienced[random_number]
         
