@@ -1,15 +1,17 @@
 import constants
+import copy
 from random import randint
 
 
 teams = constants.TEAMS
 players = constants.PLAYERS
 
+player_copy = copy.deepcopy(players)
 
 def clean_data(players):
     experienced = []
     not_experienced = []
-    for player in players:
+    for player in player_copy:
         for key, value in player.items():
             if key == 'guardians':
                 exp = value.split('and')
@@ -19,10 +21,10 @@ def clean_data(players):
                 player[key] = int(height_int[0])
             elif key == 'experience':
                 if value == 'YES':
-                    player[key] = 'True'
+                    player[key] = True
                     experienced.append(player)
                 else:
-                    player[key] = 'False'
+                    player[key] = False
                     not_experienced.append(player)
                     
     return experienced, not_experienced
@@ -48,7 +50,7 @@ def balance_player(experienced, not_experienced, teams):
         else:
             team3.append(random_player)
             experienced.remove(random_player)
-    
+
     for i in range(total_not_experienced):
         random_number = randint(0,len(not_experienced) - 1)
         random_player = not_experienced[random_number]
@@ -63,6 +65,7 @@ def balance_player(experienced, not_experienced, teams):
             team3.append(random_player)
             not_experienced.remove(random_player)
     
+
     return team1, team2, team3
                  
                
@@ -84,7 +87,7 @@ def display_team(teams, name):
                 print(f'{value}, ', end = '')
             elif key == 'name' and i == (len(teams) - 1):
                 print(f'{value}')
-            elif key == 'experience' and value == 'True':
+            elif key == 'experience' and value == True:
                 experienced_player += 1
             elif key == 'height':
                 height += value
